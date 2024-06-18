@@ -1,0 +1,35 @@
+<center>
+    <button id="API-BUTTON">이것은 테스트입니다. </button>
+    <p id="API-RESULT">이곳은 응답입니다.</p>
+</center>
+
+
+
+<script>
+
+    const url_backend = 'https://ce80-34-126-133-155.ngrok-free.app'; // 학생 public url
+
+        $("#API-BUTTON").on('click', function(){
+
+        const formData = new FormData();
+
+        var data = JSON.stringify({"data":"data"});
+        var data_str = $("#submit-advice").val();
+
+        formData.append('data', data_str);
+        formData.append('request', data);
+
+        axios.post(url_backend+"/data", formData, {
+            headers : {
+                'Content-Type' : 'multipart/form-data'
+            }
+        })
+        .then(response=> {
+            console.log(JSON.stringify(response));
+            $("#API-RESULT").text(JSON.stringify(response['data']['string'])+response['data']['json']);
+        })
+        .catch(error => {
+            alert(error);
+        })
+
+    });
